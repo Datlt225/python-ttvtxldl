@@ -1,5 +1,5 @@
 def getStopWord():
-    with open('./module/stopword.txt', encoding='utf-8', mode='r+') as file:
+    with open('stopword.txt', encoding='utf-8', mode='r+') as file:
         stopWord = file.readlines()
     return stopWord
 

@@ -107,7 +107,7 @@ def AllInformation(url):
         "JobDesciption": JobDesciption(soup),
         "ContactInformation": ContactInformation(soup),
         "ProfileRequirements": ProfileRequirements(soup),
-        "Seach": deletestopword.RemoveStopWord(JobDesciption(soup)['description'])
+        "Search": deletestopword.RemoveStopWord(JobDesciption(soup)['description'])
     }
 
     return dictionary

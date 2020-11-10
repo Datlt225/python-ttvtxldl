@@ -2,6 +2,10 @@ import pymongo
 
 
 def connectToDatabase(collection):
+    """
+
+    :rtype: object
+    """
     # mongodb://localhost:27017/
     # mongodb+srv://nghiaph:nghia123@cluster0.szulm.mongodb.net/
     myClient = pymongo.MongoClient('mongodb://localhost:27017/')
