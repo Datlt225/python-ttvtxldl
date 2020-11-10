@@ -1,6 +1,7 @@
 from module.database import *
 import module.job as job
 import module.jobseeker as jobseeker
+from os import system
 
 
 def GetNewJob():
@@ -29,17 +30,40 @@ def FindJob():
     # Search text
     searchText = input('Từ khóa: ')
 
-    # Connect to database
+    # Connect to database with "job" collection
     db = connectToDatabase('job')
 
     # Create Index
     db.create_index([('Search', 'text')])
 
-    # Search
-    data = db.find({"$text": {"$search": searchText}}).limit(10)
+    # Search and return a list
+    data = list(db.find({"$text": {"$search": searchText}}).limit(10))
 
+    # Check search
+    if len(data) == 0:
+        print(f'\n\nKhông tìm thấy bài viết có từ khóa "{searchText}"!\n\n')
+        return
+
+    # Print search list
+    i = 0
+    print(f'Các bài viết có từ khóa "{searchText}":\n')
     for x in data:
-        print(x)
+        i += 1
+        print(f"     {i}. {x['JobDesciption']['title']}")
+
+    # Choose post
+    while True:
+        choose = input("\nBài viết muốn xem (Enter để bỏ qua): ")
+        if choose == '':
+            break
+
+        try:
+            print(f"\nNội dung: {data[int(choose) - 1]['JobDesciption']['description']}")
+            print()
+            system('pause')
+            break
+        except:
+            print("\nBài viết không tồn tại!")
 
 
 FindJob()
