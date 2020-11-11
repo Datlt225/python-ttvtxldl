@@ -135,10 +135,10 @@ def AllCareer():
 
     # Chart career
     y_pos = np.arange(len(name))
-    plt.bar(y_pos, value)
+    plt.bar(y_pos, value, color='blue')
     plt.title("BIỂU ĐỒ SỐ LƯỢNG NGÀNH NGHỀ ĐANG TUYỂN DỤNG")
     plt.xticks(y_pos, name, rotation=90, fontsize=3)
-    plt.savefig('../image/career-chart.png', dpi=1500)
+    plt.savefig('./image/career-chart.png', dpi=1500)
 
 
 def CareerNeedJob():
@@ -170,10 +170,10 @@ def CareerNeedJob():
 
     # Chart career
     y_pos = np.arange(len(name))
-    plt.bar(y_pos, value)
+    plt.bar(y_pos, value, color='blue')
     plt.title("BIỂU ĐỒ SỐ LƯỢNG NGÀNH NGHỀ ĐANG CẦN VIỆC LÀM")
     plt.xticks(y_pos, name, rotation=90, fontsize=3)
-    plt.savefig('../image/chart-career-need-job.png', dpi=1500)
+    plt.savefig('./image/chart-career-need-job.png', dpi=1500)
 
 
-CareerNeedJob()
+# CareerNeedJob()
