@@ -5,8 +5,23 @@ from os import system
 
 
 def GetNewJob():
-    # Connect to database (collection: job and jobseeker)
+    # Connect to database (collection: job)
     databaseJob = connectToDatabase('job')
+
+    print('[INFO] Chờ vài phút!...')
+
+    # Get and update ~ 3 page
+    for page in range(1, 4):
+        for x in job.GetLinkJob(f'http://vieclam.laodong.com.vn/tim-kiem-ky-tuyen-dung.html?page={page}'):
+            key = {'_id': job.GetID(x)}
+            value = {'$set': job.AllInformation(x)}
+            insertToDataBase(key, value, databaseJob)
+
+    print('Đã xong!')
+
+
+def GetNewJobSeeker():
+    # Connect to database (collection: jobseeker)
     databaseJobSeeker = connectToDatabase('jobseeker')
 
     print('[INFO] Chờ vài phút!...')
@@ -18,15 +33,12 @@ def GetNewJob():
             value = {'$set': jobseeker.AllInformation(x)}
             insertToDataBase(key, value, databaseJobSeeker)
 
-        for x in job.GetLinkJob(f'http://vieclam.laodong.com.vn/tim-kiem-ky-tuyen-dung.html?page={page}'):
-            key = {'_id': job.GetID(x)}
-            value = {'$set': job.AllInformation(x)}
-            insertToDataBase(key, value, databaseJob)
-
     print('Đã xong!')
 
 
 def FindJob():
+    system('cls')
+
     # Search text
     searchText = input('Từ khóa: ')
 
@@ -58,7 +70,33 @@ def FindJob():
             break
 
         try:
-            print(f"\nNội dung: {data[int(choose) - 1]['JobDesciption']['description']}")
+            # Job information
+            print('\nMÔ TẢ CÔNG VIỆC:')
+            print(f"  - Ngành nghề: {data[int(choose) - 1]['JobDesciption']['career']}")
+            print(f"  - Cấp bậc: {data[int(choose) - 1]['JobDesciption']['level']}")
+            print(f"  - Mô tả công việc: {data[int(choose) - 1]['JobDesciption']['description']}")
+            print(f"  - Yêu cầu công việc: {data[int(choose) - 1]['JobDesciption']['requirements']}")
+            print(f"  - Lương: {data[int(choose) - 1]['JobDesciption']['salary']}")
+            print(f"  - Chế độ quyền lợi khác: {data[int(choose) - 1]['JobDesciption']['otherAdvanced']}")
+            print(f"  - Địa điểm làm việc: {data[int(choose) - 1]['JobDesciption']['location']}")
+
+            # Contact information
+            print('\nTHÔNG TIN LIÊN HỆ:')
+            print(f"  - Địa chỉ liên hệ: {data[int(choose) - 1]['ContactInformation']['address']}")
+            print(f"  - Người liên hệ: {data[int(choose) - 1]['ContactInformation']['person']}")
+            print(f"  - Số điện thoại liên hệ: {data[int(choose) - 1]['ContactInformation']['phone']}")
+            print(f"  - Email liên hệ: {data[int(choose) - 1]['ContactInformation']['email']}")
+            print(f"  - Hạn nộp HS: {data[int(choose) - 1]['ContactInformation']['expiryDate']}")
+            print(f"  - Địa điểm làm việc: {data[int(choose) - 1]['ContactInformation']['workLocation']}")
+
+            # Profile Requirements
+            print('\nYÊU CẦU HỒ SƠ:')
+            print(f"  - Độ tuổi: {data[int(choose) - 1]['ProfileRequirements']['minAge']} - {data[int(choose) - 1]['ProfileRequirements']['maxAge']}")
+            print(f"  - Giới tính: {data[int(choose) - 1]['ProfileRequirements']['gender']}")
+            print(f"  - Trình độ: {data[int(choose) - 1]['ProfileRequirements']['educationLevel']}")
+            print(f"  - Kinh nghiệm: {data[int(choose) - 1]['ProfileRequirements']['experience']}")
+            print(f"  - Yêu cầu khác: {data[int(choose) - 1]['ProfileRequirements']['orther']}")
+
             print()
             system('pause')
             break
