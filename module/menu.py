@@ -2,6 +2,8 @@ from module.database import *
 import module.job as job
 import module.jobseeker as jobseeker
 from os import system
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def GetNewJob():
@@ -104,4 +106,39 @@ def FindJob():
             print("\nBài viết không tồn tại!")
 
 
-FindJob()
+def AllCareer():
+    counts = dict()
+    name = []
+    value = []
+
+    # Connect to database (Collection: job)
+    db = connectToDatabase('job')
+    data = db.find()
+
+    # Get all carrer
+    for x in data:
+        career = x['JobDesciption']['career']
+
+        for word in career.split(','):
+            word = ' '.join(word.split())
+            if word in counts:
+                counts[word] += 1
+            else:
+                counts[word] = 1
+
+    # Get name and value list
+    print("CHI TIẾT SỐ LƯỢNG NGÀNH NGHỀ ĐANG TUYỂN DỤNG: ")
+    for x, y in counts.items():
+        print(f'   - {x}: {y}')
+        name.append(x)
+        value.append(y)
+
+    # Chart carrer
+    y_pos = np.arange(len(name))
+    plt.bar(y_pos, value)
+    plt.title("BIỂU ĐỒ SỐ LƯỢNG NGÀNH NGHỀ ĐANG TUYỂN DỤNG")
+    plt.xticks(y_pos, name, rotation=90, fontsize=3)
+    plt.savefig('../image/chart.png', dpi=1500)
+
+
+AllCareer()

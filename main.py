@@ -1,24 +1,22 @@
-import module.job as job
-import module.jobseeker as jobseeker
-from module.database import *
+# Let's consider a basic barplot.
+import matplotlib.pyplot as plt
+import numpy as np
 
-databaseJob = connectToDatabase('job')
-databaseJobSeeker = connectToDatabase('jobseeker')
+bars = ('A', 'B', 'C', 'D', 'E')
+height = [3, 12, 5, 18, 45]
 
-count = 0
-for page in range(1, 501):
-    for x in jobseeker.GetLink(f'http://vieclam.laodong.com.vn/ung-vien/?page={page}'):
-        key = {'_id': jobseeker.GetID(x)}
-        value = {'$set': jobseeker.AllInformation(x)}
-        insertToDataBase(key, value, databaseJobSeeker)
-        count += 1
-        print(f'[INFO] {count}...')
+y_pos = np.arange(len(bars))
+plt.bar(y_pos, height)
 
-    for x in job.GetLinkJob(f'http://vieclam.laodong.com.vn/tim-kiem-ky-tuyen-dung.html?page={page}'):
-        key = {'_id': job.GetID(x)}
-        value = {'$set': job.AllInformation(x)}
-        insertToDataBase(key, value, databaseJob)
-        count += 1
-        print(f'[INFO] {count}...')
+# If we have long labels, we cannot see it properly
+names = ("very long group name 1", "very long group name 2", "very long group name 3", "very long group name 4",
+         "very long group name 5")
+plt.xticks(y_pos, names, rotation=90)
 
-print('Done!')
+# Thus we have to give more margin:
+plt.subplots_adjust(bottom=0.4)
+
+# It's the same concept if you need more space for your titles
+plt.title("This is\na very very\nloooooong\ntitle!")
+plt.subplots_adjust(top=0.7)
+plt.show()
