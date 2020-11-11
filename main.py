@@ -1,22 +1,38 @@
-# Let's consider a basic barplot.
-import matplotlib.pyplot as plt
-import numpy as np
+from module.menu import *
 
-bars = ('A', 'B', 'C', 'D', 'E')
-height = [3, 12, 5, 18, 45]
+menu = """
 
-y_pos = np.arange(len(bars))
-plt.bar(y_pos, height)
+Menu:
 
-# If we have long labels, we cannot see it properly
-names = ("very long group name 1", "very long group name 2", "very long group name 3", "very long group name 4",
-         "very long group name 5")
-plt.xticks(y_pos, names, rotation=90)
+1. Cập nhật công việc.
+2. Cập nhật ứng viên.
+3. Thống kê ngành nghề đang tuyển dụng.
+4. Thống kê ngành nghề đang cần tìm việc làm.
+5. Tìm kiếm thông tin tuyển dụng.
+0. Exit/Quit
+"""
 
-# Thus we have to give more margin:
-plt.subplots_adjust(bottom=0.4)
+while True:
+    print(menu)
+    ans = input("Chọn chức năng: ")
+    if ans == "1":
+        GetNewJob()
 
-# It's the same concept if you need more space for your titles
-plt.title("This is\na very very\nloooooong\ntitle!")
-plt.subplots_adjust(top=0.7)
-plt.show()
+    elif ans == "2":
+        GetNewJobSeeker()
+
+    elif ans == "3":
+        AllCareer()
+
+    elif ans == "4":
+        CareerNeedJob()
+
+    elif ans == "5":
+        FindJob()
+
+    elif ans == "0":
+        break
+
+    else:
+        print('Không tồn tài chức năng này!')
+        system('pause')
