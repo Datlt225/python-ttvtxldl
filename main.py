@@ -1,4 +1,5 @@
-from module.menu import *
+from menu import *
+
 
 menu = """
 
@@ -9,6 +10,7 @@ Menu:
 3. Thống kê ngành nghề đang tuyển dụng.
 4. Thống kê ngành nghề đang cần tìm việc làm.
 5. Tìm kiếm thông tin tuyển dụng.
+6. Xóa Stop Word.
 0. Exit/Quit
 """
 
@@ -16,23 +18,25 @@ while True:
     print(menu)
     ans = input("Chọn chức năng: ")
     if ans == "1":
-        GetNewJob()
+        get_job()
 
     elif ans == "2":
-        GetNewJobSeeker()
+        get_job_seeker()
 
     elif ans == "3":
-        AllCareer()
+        all_career()
 
     elif ans == "4":
-        CareerNeedJob()
+        career_need_job()
 
     elif ans == "5":
-        FindJob()
+        search_job()
+
+    elif ans == "6":
+        stopword()
 
     elif ans == "0":
         break
 
     else:
         print('Không tồn tài chức năng này!')
-        system('pause')
